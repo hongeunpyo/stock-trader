@@ -1,0 +1,8 @@
+$header-height: 8vh;
+
+#header {
+    &-container {
+        height: $header-height;
+        background: $theme-dark-green;
+    }
+}

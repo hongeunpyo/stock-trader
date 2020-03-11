@@ -1,0 +1,18 @@
+.card-page {
+    &-container {
+        height: 50vh;
+        width: 65vw;
+        border: $theme-light-green 0.1em solid;
+        border-radius: 0.8em;
+        box-shadow: 0.2em 0.2em 2em $theme-brown;
+    }
+    &-header {
+        margin: 1em 0;
+        font-size: 3.6em;
+        color: white;
+    }
+    &-content {
+        width: 80%;
+        margin: 0 0 5em;
+    }
+}

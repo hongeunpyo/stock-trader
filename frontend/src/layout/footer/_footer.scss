@@ -1,0 +1,8 @@
+$footer-height: 4vh;
+
+#footer {
+    &-container {
+        height: $footer-height;
+        background: $theme-dark-green;
+    }
+}
