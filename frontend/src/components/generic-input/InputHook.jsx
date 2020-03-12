@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const useGenericText = () => {
     const [text, setText] = useState();
@@ -6,9 +6,9 @@ const useGenericText = () => {
     const handleChange = (e) => {
         const { value } = e.target;
         setText(value);
-    }
+    };
 
-    return [text, handleChange]
-}
+    return [text, handleChange];
+};
 
 export default useGenericText;

@@ -3,4 +3,12 @@
         min-height: 100%;
         background: $theme-midnight-blue;
     }
+    &-flair {
+        position: fixed;
+        width: 30em;
+        height: 30em;
+        border: 5em solid white;
+        transform: rotate(45deg) translate(-15%, 75%);
+        z-index: 0;
+    }
 }

@@ -1,0 +1,24 @@
+.fancy-button {
+    &-container {
+        width: 10em;
+        height: 3em;
+        border-radius: 2em 2em;
+        transition: background 500ms;
+        background: $theme-light-green;
+        border: none;
+        color: white;
+        &:hover {
+            cursor: pointer;
+            background: $theme-dark-green;
+        }
+        &:focus {
+            background: $theme-dark-green;
+            outline: none;
+        }
+
+    }
+    &-text {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+}

@@ -1,8 +1,57 @@
-$header-height: 8vh;
+$header-height: auto;
 
 #header {
     &-container {
         height: $header-height;
-        background: $theme-dark-green;
+        background: $theme-midnight-blue;
+        font-family: 'Fira Sans';
+        letter-spacing: 0.6px;
+    }
+    &-title {
+        font-size: 1.8em;
+        color: $theme-light-green;
+    }
+    &-sub-title {
+        color: white;
+        font-weight: 600;
+    }
+    &-logo {
+        border-radius: 1em;
+        width: 5em;
+        height: 5em;
+        &-container {
+            margin: 1em 0 1em 4em;
+            align-items: flex-end;
+        }
+        &-text-container {
+            margin: 0 0.5em;
+        }
+    }
+    &-right-side {
+        margin: 0 auto 0 0;
+    }
+    &-left-side {
+        margin: 0 0 0 auto;
+        align-items: center;
+        color: white;
+    }
+    &-link-container {
+        margin: 0 4em 0 0;
+    }
+    &-separator {
+        user-select: none;
+        font-size: 1.4em;
+        margin: 0 10px;
+    }
+}
+
+.header-link {
+    font-family: 'Raleway';
+    font-size: 1.4em;
+    font-weight: 600;
+    transition: color 500ms;
+    color: white;
+    &:hover {
+        color: $theme-light-green;
     }
 }

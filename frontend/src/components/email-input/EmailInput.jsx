@@ -1,20 +1,20 @@
 import React from 'react';
 
 import Input from '../input/Input';
-import usePasswordValidation from './PasswordHook';
+import useEmailValidation from './EmailHook';
 
-const PasswordInput = () => {
-    const [value, handleChange, errors] = usePasswordValidation();
+const EmailInput = () => {
+    const [value, handleChange, errors] = useEmailValidation();
 
     const renderErrors = () => errors.map((error) => <li key={error[0]} className="validation-error">{error[1]}</li>);
 
     return (
         <div className="validation-input-container full-width">
             <Input
-                id="password-input"
-                title="Password"
-                type="password"
-                placeholder="Enter Password"
+                id="email-input"
+                title="Email"
+                type="email"
+                placeholder="Enter Email"
                 value={value}
                 handleChange={handleChange}
                 errorOutline={errors.length !== 0}
@@ -26,4 +26,4 @@ const PasswordInput = () => {
     );
 };
 
-export default PasswordInput;
+export default EmailInput;

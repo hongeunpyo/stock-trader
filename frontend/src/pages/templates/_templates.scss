@@ -1,18 +1,26 @@
 .card-page {
     &-container {
-        height: 50vh;
-        width: 65vw;
+        height: 75%;
+        width: 65%;
         border: $theme-light-green 0.1em solid;
         border-radius: 0.8em;
         box-shadow: 0.2em 0.2em 2em $theme-brown;
+        background: $theme-midnight-blue;
+        z-index: 1;
     }
     &-header {
-        margin: 1em 0;
+        margin: 1em 0 0.5em;
         font-size: 3.6em;
         color: white;
     }
     &-content {
-        width: 80%;
-        margin: 0 0 5em;
+        width: 75%;
+        & > .validation-input-container {
+            margin: 0.5em 0;
+        }
+    }
+    &-footer {
+        margin: 3em 2em 3em auto;
+        justify-content: flex-end;
     }
 }

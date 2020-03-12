@@ -4,11 +4,16 @@
         height: 6em;
         border-radius: 0.5em;
         border: 2px solid #dbe8ea;
+        transition: border 500ms;
         &:focus-within {
+            border: 2px solid $theme-light-green;
+        }
+        &:hover {
             border: 2px solid $theme-light-green;
         }
     }
     &-title {
+        user-select: none;
         margin: 5px 15px 0;
         font-size: 1.8em;
     }
@@ -21,5 +26,28 @@
             border: none;
             outline: none;
         }
+    }
+}
+
+.validation {
+    &-error {
+        color: red;
+        &-container {
+            margin: 0;
+            padding: 1em 2em 0;
+        }
+    }
+    &-input-container {
+        
+    }
+}
+
+.generic-input-container {
+    margin: 0.5em 0 1em;
+}
+
+.input-error {
+    &:focus-within {
+        border: 2px solid red;
     }
 }
