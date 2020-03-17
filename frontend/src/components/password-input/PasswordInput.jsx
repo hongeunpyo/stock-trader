@@ -14,6 +14,7 @@ const PasswordInput = () => {
                 id="password-input"
                 title="Password"
                 type="password"
+                formKey="password"
                 placeholder="Enter Password"
                 value={value}
                 handleChange={handleChange}

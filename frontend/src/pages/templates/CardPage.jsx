@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FancyButton from '../../components/fancy-button/FancyButton';
 
-const CardPage = ({ title, children }) => (
+const CardPage = ({ title, handleSubmit, children }) => (
     <div className="full-width flex flex-center">
         <section className="card-page-container flex flex-vertical-center flex-column">
             <header className="card-page-header">{title}</header>
@@ -10,7 +10,7 @@ const CardPage = ({ title, children }) => (
                 {children}
             </div>
             <footer className="card-page-footer flex">
-                <FancyButton text="SUBMIT" />
+                <FancyButton text="SUBMIT" clickHandler={handleSubmit}/>
             </footer>
         </section>
     </div>

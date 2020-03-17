@@ -14,6 +14,7 @@ const EmailInput = () => {
                 id="email-input"
                 title="Email"
                 type="email"
+                formKey="email"
                 placeholder="Enter Email"
                 value={value}
                 handleChange={handleChange}
