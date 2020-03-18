@@ -31,14 +31,29 @@ var testUsers = map[string]string{
 	"user2": "password2",
 }
 
+func addCorsHeader(res http.ResponseWriter) {
+    headers := res.Header()
+    headers.Add("Access-Control-Allow-Origin", "*")
+    headers.Add("Vary", "Origin")
+    headers.Add("Vary", "Access-Control-Request-Method")
+    headers.Add("Vary", "Access-Control-Request-Headers")
+    headers.Add("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token")
+    headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+}
+
 // Signin handles login requests
 func Signin(w http.ResponseWriter, r *http.Request) {
 	log.Println("Sign In Request")
+	addCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	var creds Credentials
 	// Decode JSON body
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
-		log.Println(creds)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -69,7 +84,9 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	log.Println(r)
+	log.Println(w)
+	log.Println("Set cookie")
 	http.SetCookie(w, &http.Cookie{
 		Name:    "token",
 		Value:   tokenString,
@@ -81,6 +98,14 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 func Welcome(w http.ResponseWriter, r *http.Request) {
 	// Session token is retrieved from request cookie
 	log.Println("Welcome Request")
+	log.Println(r)
+	
+	addCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	c, err := r.Cookie("token")
 	if err != nil {
 		if err == http.ErrNoCookie {
@@ -122,6 +147,13 @@ func Welcome(w http.ResponseWriter, r *http.Request) {
 
 // Refresh extends the duration of a user's token
 func Refresh(w http.ResponseWriter, r *http.Request) {
+	log.Println("Refresh request")
+
+	addCorsHeader(w)
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 	// Session token is retrieved from request cookie
 	c, err := r.Cookie("token")
 	if err != nil {
