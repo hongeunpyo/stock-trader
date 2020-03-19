@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useReducer } from 'react';
 
 const initialState = {
     token: '',
-    loggedIn: '',
     email: '',
     fullName: '',
     loggedIn: false,
@@ -48,14 +47,13 @@ export const AuthContextProvider = ({ children }) => {
         if (token) {
             // fetch user data
         }
-    }, [])
+    }, []); // eslint-disable-line
 
     useEffect(() => {
-        console.log(state);
         if (state.token) {
             localStorage.setItem('token', state.token);
-        }
-    }, [state.token])
+        };
+    }, [state.token]);
 
     return (
         <AuthState.Provider value={state}>
@@ -63,8 +61,8 @@ export const AuthContextProvider = ({ children }) => {
                 {children}
             </AuthDispatch.Provider>
         </AuthState.Provider>
-    )
-}
+    );
+};
 
 export const useAuthContext = () => {
     const state = useContext(AuthState);

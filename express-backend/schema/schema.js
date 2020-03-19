@@ -19,6 +19,11 @@ const UserSchema = new mongoose.Schema({
         required: 'Full Name is required',
         max: 100
     },
+    // values stored in cents so we don't need to store in a float. We convert cents in request controller.
+    cents: {
+        type: Number,
+        default: 500000
+    }
 }, {timestamps: true});
 
 // middleware for hashing password prior to login verification/account creation

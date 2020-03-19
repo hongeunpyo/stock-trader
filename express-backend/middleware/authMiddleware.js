@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // Route protection middleware
 const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
-
+    console.log('TEST', req.body)
     // if auth header exists, the token should be sent with the request
     if (authHeader) {
         const token = authHeader.split(' ')[1];

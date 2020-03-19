@@ -1,0 +1,22 @@
+.stock {
+    &-item {
+        &-container{
+            width: 85%;
+            height: 35em;
+        }
+        &-title {
+            font-size: 2.4em;
+            color: $theme-dark-green;
+        }
+        &-text {
+            font-size: 1.6em;
+            color: $theme-dark-green;
+            &-sub {
+                color: #d6d6d6;
+            }
+        }
+    }
+    &-last-item {
+        margin: 0 0 0 auto;
+    }
+}

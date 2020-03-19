@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Input from '../input/Input';
 import useEmailValidation from './EmailHook';
 
-const EmailInput = () => {
+const EmailInput = ({ disableValidation }) => {
     const [value, handleChange, errors] = useEmailValidation();
 
     const renderErrors = () => errors.map((error) => <li key={error[0]} className="validation-error">{error[1]}</li>);
@@ -18,13 +19,23 @@ const EmailInput = () => {
                 placeholder="Enter Email"
                 value={value}
                 handleChange={handleChange}
-                errorOutline={errors.length !== 0}
+                errorOutline={!disableValidation && errors.length !== 0}
             />
-            <ul className="validation-error-container">
-                {renderErrors()}
-            </ul>
+            {!disableValidation &&
+                <ul className="validation-error-container">
+                    {renderErrors()}
+                </ul>
+            }
         </div>
     );
 };
+
+EmailInput.propTypes = {
+    disableValidation: PropTypes.bool,
+}
+
+EmailInput.defaultProps = {
+    disableValidation: false,
+}
 
 export default EmailInput;

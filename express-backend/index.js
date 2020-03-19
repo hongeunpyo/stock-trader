@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const SignIn = require('./handlers/SignIn');
 const Register = require('./handlers/Register');
+const Search = require('./handlers/Search');
 const { authenticateJWT } = require('./middleware/authMiddleware');
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ app.get('/test', authenticateJWT, (req, res) => res.send('GET: test!'))
 app.post('/signin', SignIn);
 app.post('/register', Register);
 // Authenticated routes
+app.post('/search', authenticateJWT, Search);
 
 
 app.listen(port, () => console.log(`Server started on port :${port}!`))
