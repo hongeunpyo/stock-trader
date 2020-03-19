@@ -5,7 +5,7 @@ import PortfolioItem from '../../components/portfolio-item/PortfolioItem';
 import StockSearch from '../../components/stock-search/StockSearch';
 import { useFormContext } from '../../context/form-context/FormContext';
 import { postWithToken } from '../../utils/utils';
-import { useAuthContext } from '../../context/auth-context/AuthContext';
+import { useUserContext } from '../../context/user-context/UserContext';
 import useDebounce from '../../utils/DebounceHook';
 
 const mockData = {
@@ -34,17 +34,34 @@ const mockData = {
 };
 
 const PortfolioPage = () => {
-    const [stockData, setStockData] = useState();
-    const [{ token }] = useAuthContext();
+    const [stockData, setStockData] = useState({
+        ticker: '',
+        name: '',
+        primaryExchange: '',
+        openPrice: '',
+        currentPrice: '',
+    });
+    const [{ token }] = useUserContext();
     const [{ values }] = useFormContext();
     
     const debouncedTicker = useDebounce(values.ticker, 500);
 
     const handleSearch = async (value) => {
-        const stringifiedBody = JSON.stringify({ticker: value});
+        console.log(value);
+        const stringifiedBody = JSON.stringify({"ticker": value});
         const searchUrl = 'http://localhost:8000/search';
         const data = await postWithToken(searchUrl, token, stringifiedBody);
-        console.log(data);
+        setStockData(data.data);
+    }
+
+    const handleSubmit = async () => {
+        const body = {
+            ...values
+        };
+
+        const stringifiedBody = JSON.stringify(body);
+        const buyUrl = 'http://localhost:8000/buy';
+        const data = await postWithToken(buyUrl, token, stringifiedBody);
     }
 
     useEffect(() => {
@@ -63,14 +80,17 @@ const PortfolioPage = () => {
         />
     );
 
+    console.log(stockData);
+
     const renderRight = (
         <StockSearch
-            ticker={mockData.symbol}
-            name={mockData.companyName}
-            primaryExchange={mockData.primaryExchange}
-            openPrice={mockData.open}
-            currentPrice={mockData.latestPrice}
+            ticker={stockData.symbol}
+            name={stockData.companyName}
+            primaryExchange={stockData.primaryExchange}
+            openPrice={stockData.open}
+            currentPrice={stockData.latestPrice}
             handleSearch={handleSearch}
+            handleSubmit={handleSubmit}
         />
     )
 

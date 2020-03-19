@@ -13,18 +13,16 @@ export const getWithToken = async (url, token) => {
 }
 
 export const postWithToken = async (url, token, payload) => {
-    console.log(JSON.stringify(payload));
     const response = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
         mode: 'cors',
         headers: {
-            'Content-Type': 'text/json',
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(payload)
+        body: payload
     });
-    console.log(response);
     const data = await response.json();
     return data;
 }

@@ -9,10 +9,10 @@ import LoginPage from './pages/login-page/LoginPage';
 import PortfolioPage from './pages/portfolio-page/PortfolioPage';
 import { FormContextProvider } from './context/form-context/FormContext';
 import ProtectedRoute from './pages/ProtectedRoute';
-import { useAuthContext } from './context/auth-context/AuthContext';
+import { useUserContext } from './context/user-context/UserContext';
 
 const App = () => {
-    const [{ loggedIn }] = useAuthContext();
+    const [{ loggedIn }] = useUserContext();
 
     return (
         <div className="app flex flex-column flex-1">

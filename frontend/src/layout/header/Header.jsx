@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../context/auth-context/AuthContext';
+import { useUserContext } from '../../context/user-context/UserContext';
 
 const Header = () => {
-    const [{ loggedIn }] = useAuthContext();
+    const [{ loggedIn }] = useUserContext();
 
     return (
         <header id="header-container" className="flex full-width">

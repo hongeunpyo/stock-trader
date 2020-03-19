@@ -26,7 +26,7 @@ const StockSearch = ({ ticker, name, primaryExchange, openPrice, currentPrice, h
                 }
             </div>
             <div>
-                <GenericInput title="Stock Symbol" id="ticker-input" placeholder="Enter Stock Symbol" formKey="ticker"/>
+                <GenericInput title="Stock Symbol" id="ticker-input" placeholder="Enter Stock Symbol" formKey="symbol"/>
                 <GenericInput title="Quantity" id="quantity-input" placeholder="Enter Quantity" formKey="quantity"/>
                 <FancyButton text="Buy Now" onClick={handleSubmit} />
             </div>

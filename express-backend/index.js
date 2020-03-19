@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const SignIn = require('./handlers/SignIn');
 const Register = require('./handlers/Register');
 const Search = require('./handlers/Search');
+const Buy = require('./handlers/Buy');
+const Portfolio = require('./handlers/Portfolio');
 const { authenticateJWT } = require('./middleware/authMiddleware');
+
 require('dotenv').config();
 
 const app = express();
@@ -31,6 +33,8 @@ app.post('/signin', SignIn);
 app.post('/register', Register);
 // Authenticated routes
 app.post('/search', authenticateJWT, Search);
+app.post('/buy', authenticateJWT, Buy);
+app.get('/portfolio', authenticateJWT, Portfolio);
 
 
 app.listen(port, () => console.log(`Server started on port :${port}!`))

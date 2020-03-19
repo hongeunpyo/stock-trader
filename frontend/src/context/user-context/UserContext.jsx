@@ -7,19 +7,19 @@ const initialState = {
     loggedIn: false,
 };
 
-const AuthState = React.createContext(initialState);
+const UserState = React.createContext(initialState);
 
-const AuthDispatch = React.createContext();
+const UserDispatch = React.createContext();
 
-export const AuthActions = {
+export const UserActions = {
     UPDATE_TOKEN: 'UPDATE_TOKEN',
     UPDATE_LOG_IN_STATUS: 'UPDATE_LOG_IN_STATUS',
     SIGN_IN: 'SIGN_IN'
 };
 
-const { UPDATE_TOKEN, SIGN_IN } = AuthActions
+const { UPDATE_TOKEN, SIGN_IN } = UserActions
 
-const AuthReducer = (state, action) => {
+const UserReducer = (state, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -39,8 +39,8 @@ const AuthReducer = (state, action) => {
     }
 }
 
-export const AuthContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(AuthReducer, initialState);
+export const UserContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(UserReducer, initialState);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -56,17 +56,17 @@ export const AuthContextProvider = ({ children }) => {
     }, [state.token]);
 
     return (
-        <AuthState.Provider value={state}>
-            <AuthDispatch.Provider value={dispatch}>
+        <UserState.Provider value={state}>
+            <UserDispatch.Provider value={dispatch}>
                 {children}
-            </AuthDispatch.Provider>
-        </AuthState.Provider>
+            </UserDispatch.Provider>
+        </UserState.Provider>
     );
 };
 
-export const useAuthContext = () => {
-    const state = useContext(AuthState);
-    const dispatch = useContext(AuthDispatch);
+export const useUserContext = () => {
+    const state = useContext(UserState);
+    const dispatch = useContext(UserDispatch);
 
     return [state, dispatch];
 };

@@ -5,11 +5,11 @@ import CardPage from '../templates/CardPage';
 import PasswordInput from '../../components/password-input/PasswordInput';
 import EmailInput from '../../components/email-input/EmailInput';
 import { useFormContext } from '../../context/form-context/FormContext';
-import { useAuthContext, AuthActions } from '../../context/auth-context/AuthContext';
+import { useUserContext, UserActions } from '../../context/user-context/UserContext';
 
 const LoginPage = () => {
     const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [, authDispatch] = useAuthContext();
+    const [, userDispatch] = useUserContext();
     const [formState] = useFormContext();
     const history = useHistory();
 
@@ -27,12 +27,17 @@ const LoginPage = () => {
             });
             const body = await response.json();
     
-            authDispatch({
-                type: AuthActions.SIGN_IN,
+            console.log(body);
+
+            const userTotal = body.user.cents / 100;
+
+            userDispatch({
+                type: UserActions.SIGN_IN,
                 payload: {
                     token: body.token,
                     email: body.user.email,
                     fullName: body.user.fullName,
+                    userTotal,
                     loggedIn: true,
                 }
             })

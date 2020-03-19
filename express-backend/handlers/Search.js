@@ -1,11 +1,10 @@
 const fetch = require('node-fetch');
 
 const Search = async (req, res) => {
-    // Read username and password from request body
-    console.log("Stock search request received...")
+    console.log("Stock search request received...");
     const { ticker } = req.body;
     try {
-        console.log(req.body);
+        // Query API with stock symbol
         const apiQuery = `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_fb2c11b11c644118b468d67e46cc9b43`;
         const apiResponse = await fetch(apiQuery)
     

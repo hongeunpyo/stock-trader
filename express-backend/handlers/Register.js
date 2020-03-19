@@ -1,8 +1,7 @@
-const User = require('../schema/schema');
+const User = require('../schema/UserSchema');
 
 const Register = async (req, res) => {
     try {
-        // Read email and password from request body
         const { email, password, fullName } = req.body;
         // Check to see if email isn't already registered to an account
         const user = await User.findOne({email})

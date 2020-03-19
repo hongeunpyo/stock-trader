@@ -1,4 +1,4 @@
-const User = require('../schema/schema');
+const User = require('../schema/UserSchema');
 
 const SignIn = async (req, res) => {
     // Read username and password from request body

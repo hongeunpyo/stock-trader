@@ -4,12 +4,12 @@ import CardPage from '../templates/CardPage';
 import PasswordInput from '../../components/password-input/PasswordInput';
 import GenericInput from '../../components/generic-input/GenericInput';
 import EmailInput from '../../components/email-input/EmailInput';
-import { useAuthContext, AuthActions } from '../../context/auth-context/AuthContext';
+import { useUserContext, UserActions } from '../../context/user-context/UserContext';
 import { useFormContext } from '../../context/form-context/FormContext';
 import { useHistory } from 'react-router-dom';
 
 const RegisterPage = () => {
-    const [, authDispatch] = useAuthContext();
+    const [, userDispatch] = useUserContext();
     const [formState] = useFormContext();
     const history = useHistory();
 
@@ -28,8 +28,8 @@ const RegisterPage = () => {
         const body = await response.json();
         console.log(body);
         if (body.token) {
-            authDispatch({
-                type: AuthActions.SIGN_IN,
+            userDispatch({
+                type: UserActions.SIGN_IN,
                 payload: {
                     token: body.token,
                     email: body.user.email,

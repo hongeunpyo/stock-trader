@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { useAuthContext } from '../context/auth-context/AuthContext';
+import { useUserContext } from '../context/user-context/UserContext';
 
 const ProtectedRoute = ({ path, children, exact }) => {
-    const [{loggedIn}] = useAuthContext();
+    const [{loggedIn}] = useUserContext();
 
     return (
         <Route path={path} exact={exact}>
