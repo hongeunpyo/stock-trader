@@ -29,6 +29,7 @@ const PortfolioPage = () => {
         const stringifiedBody = JSON.stringify({"ticker": value});
         const searchUrl = 'http://localhost:8000/search';
         const data = await postWithToken(searchUrl, token, stringifiedBody);
+        console.log(data);
         setStockData(data);
     }
 
