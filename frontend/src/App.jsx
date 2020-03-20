@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import 'simplebar/dist/simplebar.min.css';
 
 import Header from './layout/header/Header';
 import BodyWrapper from './layout/body/BodyWrapper';
@@ -16,7 +17,7 @@ const App = () => {
     const [{ loggedIn }] = useUserContext();
 
     return (
-        <div className="app flex flex-column flex-1">
+        <div id="app" className="flex flex-column flex-1">
             <Header />
             <BodyWrapper>
                 <Switch>

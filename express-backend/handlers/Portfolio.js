@@ -6,12 +6,20 @@ const Portfolio = async (req, res) => {
     try {
         const { userId } = req.body;
         const stocks = await Stock.find({ user: userId });
+
+        if (!stocks) {
+            return res.status(404).json({message: 'No stocks found'});
+        }
+
         const symbols = stocks.map((stock) => stock.symbol).join(',');
-        console.log(symbols);
         const apiQuery = `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=pk_fb2c11b11c644118b468d67e46cc9b43`;
         const apiResponse = await fetch(apiQuery)
 
         const apiData = await apiResponse.json();
+
+        if (apiData.error) {
+            return res.status(400).json({message: apiData.error});
+        }
 
         // Append stock quantity a user has to iex API response
         stocks.forEach((stock) => {

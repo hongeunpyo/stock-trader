@@ -8,6 +8,10 @@ export const getWithToken = async (url, token) => {
         }
     });
 
+    if (response.status !== 200) {
+        return;
+    }
+
     const data = await response.json();
     return data;
 }
@@ -24,6 +28,10 @@ export const postWithToken = async (url, token, payload) => {
         body: payload
     });
     
+    if (response.status !== 200) {
+        return;
+    }
+
     const data = await response.json();
     return data;
 }

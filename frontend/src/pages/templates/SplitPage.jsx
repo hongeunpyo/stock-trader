@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SimpleBar from 'simplebar-react';
 
 const SplitPage = ({ title, renderLeft, renderRight }) => (
     <div className="full-width flex flex-center">
@@ -9,9 +10,11 @@ const SplitPage = ({ title, renderLeft, renderRight }) => (
                 <div className="split-page-header-underline" />
             </div>
             <div className="split-page-container full-width flex flex-horizontal-center">
-                <section className="split-page-left-section flex flex-column flex-vertical-center">
-                    {renderLeft}
-                </section>
+                    <section className="split-page-left-section flex flex-column flex-vertical-center">
+                        <SimpleBar style={{height: "100%", width: "100%"}}>
+                            {renderLeft}
+                        </SimpleBar>
+                    </section>
                 {renderRight &&
                     <>
                         <div className="split-page-divider" />

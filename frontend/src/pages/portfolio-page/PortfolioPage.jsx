@@ -68,7 +68,7 @@ const PortfolioPage = () => {
     }, [loggedIn, needsUpdate]);
 
     useEffect(() => {
-        if (!!stockData.open) {
+        if (!!stockData.latestPrice) {
             setTotal((values.quantity * stockData.latestPrice).toFixed(2));
         }
     }, [values.quantity])
@@ -83,6 +83,7 @@ const PortfolioPage = () => {
         if (!portfolioData) {
             return null;
         }
+        console.log(portfolioData);
 
         const dataKeys = Object.keys(portfolioData);
         return dataKeys.map((key, index) => {
@@ -102,7 +103,7 @@ const PortfolioPage = () => {
     }
 
     const renderLeft = renderPortfolioItems();
-
+    console.log(stockData);
     const renderRight = (
         <StockSearch
             symbol={stockData.symbol}
