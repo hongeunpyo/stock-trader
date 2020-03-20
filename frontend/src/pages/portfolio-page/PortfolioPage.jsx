@@ -89,11 +89,10 @@ const PortfolioPage = () => {
         if (!portfolioData) {
             return null;
         }
-        console.log(portfolioData);
 
         const dataKeys = Object.keys(portfolioData);
         return dataKeys.map((key, index) => {
-            return (
+            return token && (
                 <>
                     <PortfolioItem
                         symbol={portfolioData[key].quote.symbol}
