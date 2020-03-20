@@ -3,9 +3,9 @@ import React from 'react';
 import GenericInput from '../generic-input/GenericInput';
 import FancyButton from '../fancy-button/FancyButton'
 
-const StockSearch = ({ ticker, name, primaryExchange, openPrice, currentPrice, handleSubmit }) => {
+const StockSearch = ({ ticker, name, primaryExchange, openPrice, currentPrice, handleSubmit, total }) => {
     const priceColor = currentPrice === openPrice ? '#d6d6d6' : currentPrice > openPrice ? 'green' : 'red';
-
+    
     return (
         <div className="flex flex-vertical-center flex-column">
             <div className="stock-item-container flex flex-vertical-center" style={{margin: '2em 0'}}>
@@ -26,9 +26,10 @@ const StockSearch = ({ ticker, name, primaryExchange, openPrice, currentPrice, h
                 }
             </div>
             <div>
-                <GenericInput title="Stock Symbol" id="ticker-input" placeholder="Enter Stock Symbol" formKey="symbol"/>
-                <GenericInput title="Quantity" id="quantity-input" placeholder="Enter Quantity" formKey="quantity"/>
-                <FancyButton text="Buy Now" onClick={handleSubmit} />
+                <GenericInput title="Stock Symbol" id="ticker-input" placeholder="Enter Stock Symbol" formKey="symbol" />
+                <GenericInput title="Quantity" id="quantity-input" placeholder="Enter Quantity" formKey="quantity" />
+                <div className="stock-item-text" style={{margin: '0 0 0.5em'}}>Total: ${total}</div>
+                <FancyButton text="Buy Now" clickHandler={handleSubmit} />
             </div>
         </div>
     )

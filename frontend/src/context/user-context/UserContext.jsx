@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 
 const initialState = {
+    userId: '',
     token: '',
     email: '',
     fullName: '',
+    userTotal: 0,
     loggedIn: false,
 };
 
@@ -14,10 +16,11 @@ const UserDispatch = React.createContext();
 export const UserActions = {
     UPDATE_TOKEN: 'UPDATE_TOKEN',
     UPDATE_LOG_IN_STATUS: 'UPDATE_LOG_IN_STATUS',
-    SIGN_IN: 'SIGN_IN'
+    SIGN_IN: 'SIGN_IN',
+    UPDATE_TOTAL: 'UPDATE_TOTAL'
 };
 
-const { UPDATE_TOKEN, SIGN_IN } = UserActions
+const { UPDATE_TOKEN, SIGN_IN, UPDATE_TOTAL } = UserActions
 
 const UserReducer = (state, action) => {
     const { type, payload } = action;
@@ -32,8 +35,12 @@ const UserReducer = (state, action) => {
             return ({
                 ...state,
                 ...payload,
-            })
-
+            });
+        case UPDATE_TOTAL:
+            return ({
+                ...state,
+                ...payload,
+            });
         default:
             return state;
     }

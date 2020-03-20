@@ -1,30 +1,53 @@
-const fetch = require('node-fetch');
-const mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId;
 
+const Stock = require('../schema/StockSchema');
 const Transaction = require('../schema/TransactionSchema');
 const User = require('../schema/UserSchema');
 
+// Handler to buy and update stock portfolio and transaction history
 const Buy = async (req, res) => {
-    console.log("Stock search request received...")
+    console.log("Stock buy request received...");
     try {
         const { userId, symbol, quantity, total } = req.body;
-
+        console.log(req.body);
         // Convert dollar total to cents to update user currency
         const totalInCents = total * 100;
         // Check to see if transaction data for a specific stock exists
-        const user = await User.findOne({_id: userId});
-        const transaction = await Transaction.findOne({user: mongoose.Types.ObjectId(userId), symbol})
+        console.log(userId);
+        const user = await User.findById(userId);
+        console.log(user);
+        const stock = await Stock.findOne({
+            user: userId, 
+            shares: quantity,
+            symbol
+        });
+        
+        const transaction = new Transaction({
+            user: userId,
+            shares: quantity,
+            symbol
+        });
+
+        if (!user) {
+            return res.status(404).json({message: 'User not found'})
+        }
+
         // Update quantity if stock is bought again
-        if (transaction){
-            transaction.quantity += quantity;
+        if (stock){
+            stock.quantity += quantity;
+
+            await stock.save();
             await transaction.save();
             return res.status(200).json({
-                message: 'The email you entered is already registed to another account'
+                message: 'Existing stock quantity updated'
             });
-        }
+        };
     
-        const newTransaction = new Transaction({user, symbol, quantity});
-        await newTransaction.save();
+        const newStock = new Stock({
+            user: userId,
+            symbol,
+            shares: quantity
+        });
 
         const newUserTotal = user.cents - totalInCents; 
 
@@ -33,6 +56,8 @@ const Buy = async (req, res) => {
         };
 
         user.cents = newUserTotal;
+        await newStock.save();
+        await transaction.save();
         await user.save();
 
         return res.status(200).json({total: user.cents});

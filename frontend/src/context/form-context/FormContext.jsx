@@ -20,7 +20,6 @@ const FormReducer = (state, action) => {
 
     switch (type) {
         case ADD_FORM_DATA:
-            console.log(state);
             return ({
                 ...state,
                 values: {

@@ -38,16 +38,16 @@ const PortfolioPage = () => {
         ticker: '',
         name: '',
         primaryExchange: '',
-        openPrice: '',
-        currentPrice: '',
+        open: 0,
+        latestPrice: '',
     });
-    const [{ token }] = useUserContext();
+    const [total, setTotal] = useState(0);
+    const [{ userId, token, userTotal }] = useUserContext();
     const [{ values }] = useFormContext();
     
-    const debouncedTicker = useDebounce(values.ticker, 500);
+    const debouncedTicker = useDebounce(values.symbol, 500);
 
     const handleSearch = async (value) => {
-        console.log(value);
         const stringifiedBody = JSON.stringify({"ticker": value});
         const searchUrl = 'http://localhost:8000/search';
         const data = await postWithToken(searchUrl, token, stringifiedBody);
@@ -56,13 +56,22 @@ const PortfolioPage = () => {
 
     const handleSubmit = async () => {
         const body = {
+            total: total,
+            userId,
             ...values
         };
-
+        console.log(body);
         const stringifiedBody = JSON.stringify(body);
         const buyUrl = 'http://localhost:8000/buy';
         const data = await postWithToken(buyUrl, token, stringifiedBody);
+        console.log(data);
     }
+
+    useEffect(() => {
+        if (!!stockData.open) {
+            setTotal(values.quantity * stockData.latestPrice);
+        }
+    }, [values.quantity])
 
     useEffect(() => {
         if (debouncedTicker) {
@@ -80,7 +89,7 @@ const PortfolioPage = () => {
         />
     );
 
-    console.log(stockData);
+    console.log(total);
 
     const renderRight = (
         <StockSearch
@@ -91,12 +100,13 @@ const PortfolioPage = () => {
             currentPrice={stockData.latestPrice}
             handleSearch={handleSearch}
             handleSubmit={handleSubmit}
+            total={total}
         />
     )
 
     return (
         <SplitPage 
-            title={`Portfolio`} 
+            title={`Portfolio ($${userTotal})`} 
             renderLeft={renderLeft}
             renderRight={renderRight}
         />

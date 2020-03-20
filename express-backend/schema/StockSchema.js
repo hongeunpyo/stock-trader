@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TransactionSchema = new mongoose.Schema({
+const StockSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
         required: 'User Id is needed',
@@ -11,13 +11,10 @@ const TransactionSchema = new mongoose.Schema({
         required: 'Symbol is required',
         trim: true
     },
-    cents: {
-        type: Number,
-    },
     shares: {
         type: Number,
         default: 0
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model('Transaction', TransactionSchema);
+module.exports = mongoose.model('Stock', StockSchema);
