@@ -41,6 +41,7 @@ const PortfolioPage = () => {
 
         const buyUrl = 'http://localhost:8000/buy';
         const data = await postWithToken(buyUrl, token, body);
+        console.log(data);
         const cents = parseInt(data.total);
         const dollars = cents / 100;
         if (dollars) {

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fetch = require('node-fetch');
 
 const Search = async (req, res) => {
@@ -5,7 +7,7 @@ const Search = async (req, res) => {
     const { ticker } = req.body;
     try {
         // Query API with stock symbol
-        const apiQuery = `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_fb2c11b11c644118b468d67e46cc9b43`;
+        const apiQuery = `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${process.env.API_CONFIG}`;
         const apiResponse = await fetch(apiQuery)
     
         const apiData = await apiResponse.json();

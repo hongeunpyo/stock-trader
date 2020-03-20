@@ -1,6 +1,7 @@
 .card {
     &-item {
         &-container{
+            margin: 0 auto;
             width: 85%;
             height: 5em;
             flex-shrink: 0;

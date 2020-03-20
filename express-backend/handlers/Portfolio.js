@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fetch = require('node-fetch');
 const Stock = require('../schema/StockSchema');
 
@@ -12,7 +14,7 @@ const Portfolio = async (req, res) => {
         }
 
         const symbols = stocks.map((stock) => stock.symbol).join(',');
-        const apiQuery = `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=pk_fb2c11b11c644118b468d67e46cc9b43`;
+        const apiQuery = `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${process.env.API_URL}`;
         const apiResponse = await fetch(apiQuery)
 
         const apiData = await apiResponse.json();
