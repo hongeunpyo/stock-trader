@@ -27,6 +27,8 @@ const RegisterPage = () => {
         });
         const body = await response.json();
         
+        const userTotal = body.user.cents / 100;
+
         if (body.token) {
             userDispatch({
                 type: UserActions.SIGN_IN,
