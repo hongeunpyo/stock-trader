@@ -97,7 +97,7 @@ const PortfolioPage = () => {
             dataKeys.forEach((key) => {
                 total += portfolioData[key].quote.latestPrice * portfolioData[key].shares;
             })
-            setStockSum(total);
+            setStockSum(total.toFixed(2));
         }
 
         calculateTotal();
