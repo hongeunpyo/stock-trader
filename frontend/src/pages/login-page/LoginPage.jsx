@@ -16,7 +16,7 @@ const LoginPage = () => {
     const handleSubmit = async () => {  
         try {
             const data = JSON.stringify(formState.values);
-            const response = await fetch('http://localhost:8000/signin', {
+            const response = await fetch('http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/signin', {
                 method: 'POST',
                 credentials: "same-origin",
                 mode: 'cors',
