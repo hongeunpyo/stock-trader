@@ -44,8 +44,6 @@ const PortfolioPage = () => {
             ...values
         });
 
-        console.log(body);
-
         const buyUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/buy';
         const data = await postWithToken(buyUrl, token, body);
 
@@ -110,7 +108,7 @@ const PortfolioPage = () => {
     }
 
     const renderLeft = renderPortfolioItems();
-    
+
     const renderRight = (
         <StockSearch
             symbol={stockData.symbol}

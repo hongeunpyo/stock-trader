@@ -26,14 +26,16 @@ const RegisterPage = () => {
             body: data,
         });
         const body = await response.json();
-        console.log(body);
+        
         if (body.token) {
             userDispatch({
                 type: UserActions.SIGN_IN,
                 payload: {
+                    userId: body.user._id,
                     token: body.token,
                     email: body.user.email,
                     fullName: body.user.fullName,
+                    userTotal,
                     loggedIn: true,
                 }
             });
