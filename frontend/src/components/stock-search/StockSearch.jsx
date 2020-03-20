@@ -10,13 +10,13 @@ const StockSearch = ({ symbol, name, primaryExchange, openPrice, currentPrice, h
     return (
         <div className="flex flex-vertical-center flex-column">
             <div className="stock-item-container flex flex-vertical-center" style={{margin: '2em 0'}}>
-            <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
-                <span className="stock-item-title" style={{fontWeight: 600}}>
-                    Cash - ${userTotal} 
-                </span>
-            </div>
                 {symbol &&
                     <div className='flex flex-column flex-vertical-center full-width full-height'>
+                        <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
+                            <span className="stock-item-title" style={{fontWeight: 600}}>
+                                Cash - ${userTotal} 
+                            </span>
+                        </div>
                         <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
                             <span className="stock-item-title" style={{fontWeight: 600}}>
                                 {symbol} 
