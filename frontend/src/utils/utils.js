@@ -23,6 +23,7 @@ export const postWithToken = async (url, token, payload) => {
         },
         body: payload
     });
+    
     const data = await response.json();
     return data;
 }

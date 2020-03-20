@@ -19,11 +19,11 @@ const App = () => {
             <Header />
             <BodyWrapper>
                 <Switch>
-                    <Route path='/' exact>
+                    <ProtectedRoute path='/' exact>
                         <FormContextProvider>
                             <PortfolioPage />
                         </FormContextProvider>
-                    </Route>
+                    </ProtectedRoute>
                     <ProtectedRoute path="/transactions">
                         <div>placehodler</div>
                     </ProtectedRoute>

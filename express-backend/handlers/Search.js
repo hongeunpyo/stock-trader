@@ -10,7 +10,7 @@ const Search = async (req, res) => {
     
         const apiData = await apiResponse.json();
 
-        return res.status(200).json({data: apiData});
+        return res.status(200).json(apiData);
     }
     catch (err) {
         return res.status(500).json({message: err.message});

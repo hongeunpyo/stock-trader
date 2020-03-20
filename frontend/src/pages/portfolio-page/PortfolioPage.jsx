@@ -5,7 +5,7 @@ import PortfolioItem from '../../components/portfolio-item/PortfolioItem';
 import StockSearch from '../../components/stock-search/StockSearch';
 import { useFormContext } from '../../context/form-context/FormContext';
 import { postWithToken } from '../../utils/utils';
-import { useUserContext } from '../../context/user-context/UserContext';
+import { useUserContext, UserActions } from '../../context/user-context/UserContext';
 import useDebounce from '../../utils/DebounceHook';
 
 const mockData = {
@@ -42,7 +42,8 @@ const PortfolioPage = () => {
         latestPrice: '',
     });
     const [total, setTotal] = useState(0);
-    const [{ userId, token, userTotal }] = useUserContext();
+    const [portfolioData, setPortfolioData] = useState();
+    const [{ loggedIn, userId, token, userTotal }, userDispatch] = useUserContext();
     const [{ values }] = useFormContext();
     
     const debouncedTicker = useDebounce(values.symbol, 500);
@@ -51,25 +52,45 @@ const PortfolioPage = () => {
         const stringifiedBody = JSON.stringify({"ticker": value});
         const searchUrl = 'http://localhost:8000/search';
         const data = await postWithToken(searchUrl, token, stringifiedBody);
-        setStockData(data.data);
+        setStockData(data);
     }
 
     const handleSubmit = async () => {
-        const body = {
+        const body = JSON.stringify({
             total: total,
             userId,
             ...values
-        };
-        console.log(body);
+        });
+
         const stringifiedBody = JSON.stringify(body);
         const buyUrl = 'http://localhost:8000/buy';
-        const data = await postWithToken(buyUrl, token, stringifiedBody);
-        console.log(data);
+        const data = await postWithToken(buyUrl, token, body);
+        const cents = parseInt(data.total);
+        const dollars = cents / 100;
+        if (dollars) {
+            userDispatch({
+                type: UserActions.UPDATE_TOTAL,
+                payload: {userTotal: dollars}
+            });
+        }
     }
 
     useEffect(() => {
+        // IFFE to retrieve portfolio data
+        (async () => {
+            if (loggedIn) {
+                const body = JSON.stringify({ userId });
+        
+                const portfolioUrl = 'http://localhost:8000/portfolio';
+                const data = await postWithToken(portfolioUrl, token, body);
+                setPortfolioData(data);
+            }
+        })()
+    }, [loggedIn]);
+
+    useEffect(() => {
         if (!!stockData.open) {
-            setTotal(values.quantity * stockData.latestPrice);
+            setTotal((values.quantity * stockData.latestPrice).toFixed(2));
         }
     }, [values.quantity])
 
@@ -79,18 +100,31 @@ const PortfolioPage = () => {
         }
     }, [debouncedTicker])
 
-    const renderLeft = (
-        <PortfolioItem 
-            ticker={mockData.symbol}
-            name={mockData.companyName}
-            numOfShares={5}
-            openPrice={mockData.open}
-            currentPrice={mockData.latestPrice}
-        />
-    );
+    const renderPortfolioItems = () => {
+        if (!portfolioData) {
+            return null;
+        }
 
-    console.log(total);
+        const dataKeys = Object.keys(portfolioData);
+        return dataKeys.map((key, index) => {
+            return (
+                <>
+                    <PortfolioItem
+                        ticker={portfolioData[key].quote.symbol}
+                        name={portfolioData[key].quote.companyName}
+                        numOfShares={5}
+                        openPrice={portfolioData[key].quote.open}
+                        currentPrice={portfolioData[key].quote.latestPrice}
+                    />
+                    {(index !== (dataKeys.length - 1)) && <hr className='item-divider'/>}
+                </>
+            )
+        })
+    }
 
+    const renderLeft = renderPortfolioItems();
+
+    console.log(renderLeft);
     const renderRight = (
         <StockSearch
             ticker={stockData.symbol}

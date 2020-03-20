@@ -1,24 +1,24 @@
-const ObjectId = require('mongoose').Types.ObjectId;
-
 const Stock = require('../schema/StockSchema');
 const Transaction = require('../schema/TransactionSchema');
 const User = require('../schema/UserSchema');
+
+const saveTransaction = async (stock, user, transaction) => {
+    await stock.save();
+    await transaction.save();
+    await user.save();
+}
 
 // Handler to buy and update stock portfolio and transaction history
 const Buy = async (req, res) => {
     console.log("Stock buy request received...");
     try {
         const { userId, symbol, quantity, total } = req.body;
-        console.log(req.body);
         // Convert dollar total to cents to update user currency
         const totalInCents = total * 100;
         // Check to see if transaction data for a specific stock exists
-        console.log(userId);
         const user = await User.findById(userId);
-        console.log(user);
         const stock = await Stock.findOne({
             user: userId, 
-            shares: quantity,
             symbol
         });
         
@@ -32,33 +32,31 @@ const Buy = async (req, res) => {
             return res.status(404).json({message: 'User not found'})
         }
 
+        const newUserTotal = user.cents - totalInCents; 
+        user.cents = newUserTotal;
+
+        if (user.cents < 0) {
+            return res.status(400).json({message: 'Not enough funds to buy stocks!'});
+        };
+
         // Update quantity if stock is bought again
         if (stock){
             stock.quantity += quantity;
 
-            await stock.save();
-            await transaction.save();
+            saveTransaction(stock, user, transaction);
             return res.status(200).json({
+                total: user.cents,
                 message: 'Existing stock quantity updated'
             });
         };
-    
+
         const newStock = new Stock({
             user: userId,
             symbol,
             shares: quantity
         });
 
-        const newUserTotal = user.cents - totalInCents; 
-
-        if (newUserTotal < 0) {
-            return res.status(404).json({message: 'Not enough funds to buy stocks!'});
-        };
-
-        user.cents = newUserTotal;
-        await newStock.save();
-        await transaction.save();
-        await user.save();
+        saveTransaction(newStock, user, transaction);
 
         return res.status(200).json({total: user.cents});
     }

@@ -34,7 +34,7 @@ app.post('/register', Register);
 // Authenticated routes
 app.post('/search', authenticateJWT, Search);
 app.post('/buy', authenticateJWT, Buy);
-app.get('/portfolio', authenticateJWT, Portfolio);
+app.post('/portfolio', authenticateJWT, Portfolio);
 
 
 app.listen(port, () => console.log(`Server started on port :${port}!`))
