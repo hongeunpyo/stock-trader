@@ -16,7 +16,7 @@ const RegisterPage = () => {
     const handleSubmit = async () => {  
         const data = JSON.stringify(formState.values);
 
-        const response = await fetch('http://localhost:8000/register', {
+        const response = await fetch('http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/register', {
             method: 'POST',
             credentials: "same-origin",
             mode: 'cors',

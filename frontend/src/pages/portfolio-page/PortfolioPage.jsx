@@ -27,7 +27,7 @@ const PortfolioPage = () => {
 
     const handleSearch = async (value) => {
         const stringifiedBody = JSON.stringify({"ticker": value});
-        const searchUrl = 'http://localhost:8000/search';
+        const searchUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/search';
         const data = await postWithToken(searchUrl, token, stringifiedBody);
         console.log(data);
         setStockData(data);
@@ -40,7 +40,7 @@ const PortfolioPage = () => {
             ...values
         });
 
-        const buyUrl = 'http://localhost:8000/buy';
+        const buyUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/buy';
         const data = await postWithToken(buyUrl, token, body);
         console.log(data);
         const cents = parseInt(data.total);
@@ -60,7 +60,7 @@ const PortfolioPage = () => {
             if (loggedIn) {
                 const body = JSON.stringify({ userId });
         
-                const portfolioUrl = 'http://localhost:8000/portfolio';
+                const portfolioUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/portfolio';
                 const data = await postWithToken(portfolioUrl, token, body);
                 console.log(data);
                 setPortfolioData(data);
