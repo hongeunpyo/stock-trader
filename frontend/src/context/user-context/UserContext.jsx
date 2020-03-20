@@ -5,7 +5,7 @@ const initialState = {
     token: '',
     email: '',
     fullName: '',
-    userTotal: 0,
+    userTotal: 5000,
     loggedIn: false,
 };
 

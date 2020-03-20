@@ -38,8 +38,10 @@ const RegisterPage = () => {
                 }
             });
     
-            // redirect to home page on successful login
-            history.push('/');
+            // redirect to home page on successful login, buffer login time to give DB time to write user data
+            setTimeout(() => {
+                history.push('/');
+            }, 500)
         }
     }
 

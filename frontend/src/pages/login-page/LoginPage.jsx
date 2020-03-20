@@ -27,8 +27,6 @@ const LoginPage = () => {
             });
             const body = await response.json();
     
-            console.log(body);
-
             const userTotal = body.user.cents / 100;
 
             userDispatch({

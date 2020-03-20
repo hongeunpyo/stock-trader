@@ -29,7 +29,11 @@ const PortfolioPage = () => {
         const stringifiedBody = JSON.stringify({"ticker": value});
         const searchUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/search';
         const data = await postWithToken(searchUrl, token, stringifiedBody);
-        console.log(data);
+        
+        if (!data) {
+            return;
+        }
+        
         setStockData(data);
     }
 
@@ -62,7 +66,7 @@ const PortfolioPage = () => {
         
                 const portfolioUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/portfolio';
                 const data = await postWithToken(portfolioUrl, token, body);
-                console.log(data);
+
                 setPortfolioData(data);
                 setNeedsUpdate(false);
             }
