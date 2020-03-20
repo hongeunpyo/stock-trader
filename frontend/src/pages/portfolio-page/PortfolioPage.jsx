@@ -86,6 +86,23 @@ const PortfolioPage = () => {
         }
     }, [debouncedTicker])
 
+    useEffect(() => {
+        if (!portfolioData) {
+            return;
+        }
+
+        const calculateTotal = () => {
+            const dataKeys = Object.keys(portfolioData);
+            let total = 0;
+            dataKeys.forEach((key) => {
+                total += portfolioData[key].quote.latestPrice * portfolioData[key].shares;
+            })
+            setStockSum(total);
+        }
+
+        calculateTotal();
+    }, [portfolioData])
+
     const renderPortfolioItems = () => {
         if (!portfolioData) {
             return null;
@@ -93,8 +110,7 @@ const PortfolioPage = () => {
 
         const dataKeys = Object.keys(portfolioData);
         return dataKeys.map((key, index) => {
-            setStockSum(stockSum + (portfolioData[key].quote.latestPrice * portfolioData[key].shares));
-            return token && (
+            return (
                 <>
                     <PortfolioItem
                         symbol={portfolioData[key].quote.symbol}
