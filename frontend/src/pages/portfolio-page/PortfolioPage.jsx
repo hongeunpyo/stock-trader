@@ -16,11 +16,12 @@ const PortfolioPage = () => {
         open: 0,
         latestPrice: '',
     });
+    const [stockSum, setStockSum] = useState(0);
     const [total, setTotal] = useState(0);
     const [portfolioData, setPortfolioData] = useState();
     const [needsUpdate, setNeedsUpdate] = useState();
 
-    const [{ loggedIn, userId, token, userTotal }, userDispatch] = useUserContext();
+    const [{ loggedIn, userId, token }, userDispatch] = useUserContext();
     const [{ values }] = useFormContext();
     
     const debouncedTicker = useDebounce(values.symbol, 500);
@@ -92,6 +93,7 @@ const PortfolioPage = () => {
 
         const dataKeys = Object.keys(portfolioData);
         return dataKeys.map((key, index) => {
+            setStockSum(stockSum + (portfolioData[key].quote.latestPrice * portfolioData[key].shares));
             return token && (
                 <>
                     <PortfolioItem
@@ -124,7 +126,7 @@ const PortfolioPage = () => {
 
     return (
         <SplitPage 
-            title={`Portfolio ($${userTotal})`} 
+            title={`Portfolio ($${stockSum})`} 
             renderLeft={renderLeft}
             renderRight={renderRight}
         />
