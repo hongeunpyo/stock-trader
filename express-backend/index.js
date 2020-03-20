@@ -7,6 +7,7 @@ const Register = require('./handlers/Register');
 const Search = require('./handlers/Search');
 const Buy = require('./handlers/Buy');
 const Portfolio = require('./handlers/Portfolio');
+const Transactions = require('./handlers/Transactions');
 const { authenticateJWT } = require('./middleware/authMiddleware');
 
 require('dotenv').config();
@@ -35,6 +36,7 @@ app.post('/register', Register);
 app.post('/search', authenticateJWT, Search);
 app.post('/buy', authenticateJWT, Buy);
 app.post('/portfolio', authenticateJWT, Portfolio);
+app.post('/transactions', authenticateJWT, Transactions);
 
 
 app.listen(port, () => console.log(`Server started on port :${port}!`))

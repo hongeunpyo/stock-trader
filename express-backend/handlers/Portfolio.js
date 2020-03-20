@@ -1,4 +1,3 @@
-const ObjectId = require('mongoose').Types.ObjectId;
 const fetch = require('node-fetch');
 const Stock = require('../schema/StockSchema');
 
@@ -13,7 +12,12 @@ const Portfolio = async (req, res) => {
         const apiResponse = await fetch(apiQuery)
 
         const apiData = await apiResponse.json();
-        console.log(apiData);
+
+        // Append stock quantity a user has to iex API response
+        stocks.forEach((stock) => {
+            apiData[stock.symbol].shares = stock.shares;
+        });
+
         return res.status(200).json(apiData);
     }
     catch (err) {

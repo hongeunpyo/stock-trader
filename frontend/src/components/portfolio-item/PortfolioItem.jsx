@@ -1,14 +1,14 @@
 import React from 'react';
 import CardItem from '../card-item/CardItem';
 
-const PortfolioItem = ({ ticker, name, numOfShares, openPrice, currentPrice }) => {
-    const total = numOfShares * currentPrice;
+const PortfolioItem = ({ symbol, name, numOfShares, openPrice, currentPrice }) => {
+    const total = (numOfShares * currentPrice).toFixed(2);
 
     const priceColor = currentPrice === openPrice ? '#d6d6d6' : currentPrice > openPrice ? 'green' : 'red';
      return (
         <CardItem>
-            <div className="flex flex-column" style={{margin: '0 5em 0 0'}}>
-                <span className="card-item-text" style={{fontWeight: 600}}>{ticker} </span>
+            <div className="card-first-item flex flex-column" style={{margin: '0 5em 0 0'}}>
+                <span className="card-item-text" style={{fontWeight: 600}}>{symbol} </span>
                 <span className='card-item-text-sub'>{name}</span>
             </div>
             <div className="flex flex-column">

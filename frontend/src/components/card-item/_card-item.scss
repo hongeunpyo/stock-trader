@@ -3,6 +3,7 @@
         &-container{
             width: 85%;
             height: 5em;
+            flex-shrink: 0;
         }
         &-text {
             font-size: 1.6em;
@@ -11,6 +12,9 @@
                 color: #d6d6d6;
             }
         }
+    }
+    &-first-item {
+        width: 33%;
     }
     &-last-item {
         margin: 0 0 0 auto;

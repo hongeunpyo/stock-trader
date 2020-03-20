@@ -3,17 +3,17 @@ import React from 'react';
 import GenericInput from '../generic-input/GenericInput';
 import FancyButton from '../fancy-button/FancyButton'
 
-const StockSearch = ({ ticker, name, primaryExchange, openPrice, currentPrice, handleSubmit, total }) => {
+const StockSearch = ({ symbol, name, primaryExchange, openPrice, currentPrice, handleSubmit, total }) => {
     const priceColor = currentPrice === openPrice ? '#d6d6d6' : currentPrice > openPrice ? 'green' : 'red';
     
     return (
         <div className="flex flex-vertical-center flex-column">
             <div className="stock-item-container flex flex-vertical-center" style={{margin: '2em 0'}}>
-                {ticker &&
+                {symbol &&
                     <div className='flex flex-column flex-vertical-center full-width full-height'>
                         <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
                             <span className="stock-item-title" style={{fontWeight: 600}}>
-                                {ticker} 
+                                {symbol} 
                                 <span style={{margin: '0 0 0 10px', fontSize: '12px'}}>({primaryExchange})</span>
                             </span>
                             <span className='stock-item-text-sub'>{name}</span>

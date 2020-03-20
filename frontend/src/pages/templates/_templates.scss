@@ -41,7 +41,7 @@
         color: $theme-light-green;
     }
     &-container {
-        height: 85%;
+        height: 75vh;
     }
     &-left-section {
         margin: 0 auto 0 4em;
@@ -50,6 +50,7 @@
         border-radius: 0.8em;
         z-index: 1;
         background: $theme-midnight-blue;
+        overflow-y: scroll;
     }
     &-divider {
         margin: auto;

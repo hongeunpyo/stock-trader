@@ -8,31 +8,6 @@ import { postWithToken } from '../../utils/utils';
 import { useUserContext, UserActions } from '../../context/user-context/UserContext';
 import useDebounce from '../../utils/DebounceHook';
 
-const mockData = {
-    symbol: "AAOI",
-    companyName: "Applied Optoelectronics, Inc.",
-    primaryExchange: "NDSAQA",
-    calculationPrice: "close",
-    open: 5.8,
-    openTime: 1605856722037,
-    close: 6.21,
-    closeTime: 1662233922730,
-    high: 6.42,
-    low: 5.67,
-    latestPrice: 6.25,
-    previousClose: 5.89,
-    previousVolume: 790382,
-    change: 0.33,
-    changePercent: 0.05809,
-    marketCap: 126533724,
-    peRatio: -1.84,
-    week52High: 16.56,
-    week52Low: 5.38,
-    ytdChange: -0.4958081361212221,
-    lastTradeTime: 1587317538038,
-    isUSMarketOpen: false
-};
-
 const PortfolioPage = () => {
     const [stockData, setStockData] = useState({
         ticker: '',
@@ -43,6 +18,8 @@ const PortfolioPage = () => {
     });
     const [total, setTotal] = useState(0);
     const [portfolioData, setPortfolioData] = useState();
+    const [needsUpdate, setNeedsUpdate] = useState();
+
     const [{ loggedIn, userId, token, userTotal }, userDispatch] = useUserContext();
     const [{ values }] = useFormContext();
     
@@ -62,7 +39,6 @@ const PortfolioPage = () => {
             ...values
         });
 
-        const stringifiedBody = JSON.stringify(body);
         const buyUrl = 'http://localhost:8000/buy';
         const data = await postWithToken(buyUrl, token, body);
         const cents = parseInt(data.total);
@@ -72,6 +48,7 @@ const PortfolioPage = () => {
                 type: UserActions.UPDATE_TOTAL,
                 payload: {userTotal: dollars}
             });
+            setNeedsUpdate(true);
         }
     }
 
@@ -83,10 +60,12 @@ const PortfolioPage = () => {
         
                 const portfolioUrl = 'http://localhost:8000/portfolio';
                 const data = await postWithToken(portfolioUrl, token, body);
+                console.log(data);
                 setPortfolioData(data);
+                setNeedsUpdate(false);
             }
         })()
-    }, [loggedIn]);
+    }, [loggedIn, needsUpdate]);
 
     useEffect(() => {
         if (!!stockData.open) {
@@ -110,9 +89,9 @@ const PortfolioPage = () => {
             return (
                 <>
                     <PortfolioItem
-                        ticker={portfolioData[key].quote.symbol}
+                        symbol={portfolioData[key].quote.symbol}
                         name={portfolioData[key].quote.companyName}
-                        numOfShares={5}
+                        numOfShares={portfolioData[key].shares}
                         openPrice={portfolioData[key].quote.open}
                         currentPrice={portfolioData[key].quote.latestPrice}
                     />
@@ -124,10 +103,9 @@ const PortfolioPage = () => {
 
     const renderLeft = renderPortfolioItems();
 
-    console.log(renderLeft);
     const renderRight = (
         <StockSearch
-            ticker={stockData.symbol}
+            symbol={stockData.symbol}
             name={stockData.companyName}
             primaryExchange={stockData.primaryExchange}
             openPrice={stockData.open}

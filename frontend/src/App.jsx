@@ -7,6 +7,7 @@ import Footer from './layout/footer/Footer';
 import RegisterPage from './pages/register-page/RegisterPage';
 import LoginPage from './pages/login-page/LoginPage';
 import PortfolioPage from './pages/portfolio-page/PortfolioPage';
+import TransactionsPage from './pages/transactions-page/TransactionsPage';
 import { FormContextProvider } from './context/form-context/FormContext';
 import ProtectedRoute from './pages/ProtectedRoute';
 import { useUserContext } from './context/user-context/UserContext';
@@ -25,7 +26,7 @@ const App = () => {
                         </FormContextProvider>
                     </ProtectedRoute>
                     <ProtectedRoute path="/transactions">
-                        <div>placehodler</div>
+                        <TransactionsPage />
                     </ProtectedRoute>
                     {!loggedIn &&
                         <>

@@ -11,6 +11,9 @@ const TransactionSchema = new mongoose.Schema({
         required: 'Symbol is required',
         trim: true
     },
+    name: {
+        type: String,
+    },
     cents: {
         type: Number,
     },
