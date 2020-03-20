@@ -10,26 +10,28 @@ const StockSearch = ({ symbol, name, primaryExchange, openPrice, currentPrice, h
     return (
         <div className="flex flex-vertical-center flex-column">
             <div className="stock-item-container flex flex-vertical-center" style={{margin: '2em 0'}}>
-                {symbol &&
-                    <div className='flex flex-column flex-vertical-center full-width full-height'>
-                        <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
-                            <span className="stock-item-title" style={{fontWeight: 600}}>
-                                Cash - ${userTotal} 
-                            </span>
-                        </div>
-                        <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
-                            <span className="stock-item-title" style={{fontWeight: 600}}>
-                                {symbol} 
-                                <span style={{margin: '0 0 0 10px', fontSize: '12px'}}>({primaryExchange})</span>
-                            </span>
-                            <span className='stock-item-text-sub'>{name}</span>
-                        </div>
-                        <div className="flex flex-column" style={{margin: 'auto 0 0 auto'}}>
-                            <span className="stock-item-text">Current: <span style={{color: priceColor}}>${currentPrice}</span></span>
-                            <span className="stock-item-text-sub">Open: ${openPrice}</span>
-                        </div>
+                <div className='flex flex-column flex-vertical-center full-width full-height'>
+                    <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
+                        <span className="stock-item-title" style={{fontWeight: 600}}>
+                            Cash - ${userTotal} 
+                        </span>
                     </div>
-                }
+                    {symbol &&
+                        <>
+                            <div className="flex flex-column" style={{margin: '0 auto 0 0'}}>
+                                <span className="stock-item-title" style={{fontWeight: 600}}>
+                                    {symbol} 
+                                    <span style={{margin: '0 0 0 10px', fontSize: '12px'}}>({primaryExchange})</span>
+                                </span>
+                                <span className='stock-item-text-sub'>{name}</span>
+                            </div>
+                            <div className="flex flex-column" style={{margin: 'auto 0 0 auto'}}>
+                                <span className="stock-item-text">Current: <span style={{color: priceColor}}>${currentPrice}</span></span>
+                                <span className="stock-item-text-sub">Open: ${openPrice}</span>
+                            </div>
+                        </>
+                    }
+                </div>
             </div>
             <div>
                 <GenericInput title="Stock Symbol" id="ticker-input" placeholder="Enter Stock Symbol" formKey="symbol" />
