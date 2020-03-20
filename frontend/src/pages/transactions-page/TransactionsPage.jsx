@@ -15,7 +15,7 @@ const TransactionsPage = () => {
             if (loggedIn) {
                 const body = JSON.stringify({ userId });
         
-                const transactionsUrl = 'http://localhost:8000/transactions';
+                const transactionsUrl = 'http://ec2-3-21-232-246.us-east-2.compute.amazonaws.com:8000/transactions';
                 const data = await postWithToken(transactionsUrl, token, body);
                 setTransactionData(data);
             }
