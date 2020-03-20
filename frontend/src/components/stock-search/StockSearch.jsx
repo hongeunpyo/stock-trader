@@ -6,19 +6,19 @@ import { useUserContext } from '../../context/user-context/UserContext';
 
 const StockSearch = ({ symbol, name, primaryExchange, openPrice, currentPrice, handleSubmit, total }) => {
     const priceColor = currentPrice === openPrice ? '#d6d6d6' : currentPrice > openPrice ? 'green' : 'red';
-    const { userTotal } = useUserContext();
+    const [{ userTotal }] = useUserContext();
     return (
         <div className="flex flex-vertical-center flex-column">
             <div className="stock-item-container flex flex-vertical-center" style={{margin: '2em 0'}}>
                 <div className='flex flex-column flex-vertical-center full-width full-height'>
-                    <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
+                    <div className="flex flex-column" style={{margin: '0 auto 0 0'}}>
                         <span className="stock-item-title" style={{fontWeight: 600}}>
                             Cash - ${userTotal} 
                         </span>
                     </div>
                     {symbol &&
                         <>
-                            <div className="flex flex-column" style={{margin: '0 auto 0 0'}}>
+                            <div className="flex flex-column" style={{margin: '0 auto auto 0'}}>
                                 <span className="stock-item-title" style={{fontWeight: 600}}>
                                     {symbol} 
                                     <span style={{margin: '0 0 0 10px', fontSize: '12px'}}>({primaryExchange})</span>
